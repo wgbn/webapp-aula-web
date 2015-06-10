@@ -12,11 +12,6 @@
                 item: 'Biscoito de chocolate',
                 valor: 1.5,
                 qtde: 2
-            },
-            {
-                item: 'Bolacha maizena',
-                valor: 2.8,
-                qtde: 1
             }
         ];
 
