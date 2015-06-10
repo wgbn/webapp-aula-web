@@ -30,7 +30,7 @@ header {
         font-weight: bold;
     }
 
-section {
+section.app {
     position: relative;
     overflow: auto;
 }
@@ -71,7 +71,7 @@ main .add {
     }
 
 .item {
-    padding: .7em .5em;
+    padding: .4em .5em;
     border-bottom: 1px solid #9FA8DA;
     font-size: 1.1em;
 }
