@@ -1,0 +1,94 @@
+*, html, body, ul, li, h1, h2, h3, h4, h5 {
+    margin: 0;
+    padding: 0;
+}
+
+ul {
+    list-style: none;
+}
+
+body {
+    background-color: #C5CAE9;
+    font-family: serif;
+}
+
+header {
+    background-color: #3F51B5;
+    height: 150px;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+    header #total {
+        font-size: 5em;
+        font-weight: bold;
+    }
+
+section {
+    position: relative;
+    overflow: auto;
+}
+main .add {
+    position: absolute;
+    top: 120px;
+    right: 10px;
+    border: 0;
+    background-color: #fff;
+    width: 60px;
+    height: 60px;
+    -webkit-border-radius: 30px;
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #1A237E;
+    font-size: 2em;
+    font-weight: bold;
+    line-height: 1em;
+    -webkit-box-shadow: 2px 2px 4px 0 rgba(0,0,0,.3);
+    box-shadow: 2px 2px 4px 0 rgba(0,0,0,.3);
+    z-index: 100;
+}
+
+.barra {
+    height: 50px;
+    background-color: #303F9F;
+}
+    .barra h1 {
+        color: #fff;
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 1.3em;
+        font-weight: normal;
+        line-height: 2.3em;
+    }
+
+.item {
+    padding: .7em .5em;
+    border-bottom: 1px solid #9FA8DA;
+    font-size: 1.1em;
+}
+.item strong.nome {
+    font-weight: normal;
+    color: #283593;
+    text-transform: uppercase;
+    font-size: 1em;
+    /*text-shadow: 1px 1px 2px rgba(0,0,0,.5);*/
+}
+.item .dados {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: .3em;
+}
+.item .dados div span {
+    color: #304FFE;
+    display: block;
+}
+.item .dados div em {
+    text-transform: uppercase;
+    color: #333;
+    font-size: .7em;
+}
