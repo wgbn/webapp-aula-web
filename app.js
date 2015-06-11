@@ -17,9 +17,7 @@
 
         _public.init = function(){
             console.info('init');
-
             console.info(itens);
-
             var _altura = document.querySelector('body').offsetHeight - (document.querySelector('header').offsetHeight + document.querySelector('.barra').offsetHeight);
             document.querySelector('.app').style.maxHeight = (_altura-60)+'px';
         };
@@ -27,7 +25,15 @@
         _private.printListaItens = function(){
 
         };
+        _private.addItemLista = function() {
+            var item = {
+                item: document.querySelector("#nome-item").value,
+                valor: document.querySelector("#valor-item").value,
+                qtde: document.querySelector("#qtd-item").value
+            };
 
+            itens.push(item);
+        }; 
         return _public;
 
     })();
