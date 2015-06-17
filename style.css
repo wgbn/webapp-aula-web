@@ -7,6 +7,10 @@ https://www.google.com/design/spec/style/color.html#color-color-palette
     padding: 0;
 }
 
+.clearfix {
+    overflow: auto;
+}
+
 ul {
     list-style: none;
 }
@@ -27,14 +31,14 @@ header {
     background-color: #3F51B5;
     height: 100px;
     color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    text-align: center;
     z-index: 2;
 }
     header #total {
         font-size: 4em;
         font-weight: bold;
+        margin-top: .2em;
+        display: inline-block;
     }
 
 section.app {
@@ -115,9 +119,20 @@ main .add-oculto {
     color: #bf360c !important;
 }
 .item .dados {
-    display: flex;
-    justify-content: space-between;
+    /*display: flex;
+    justify-content: space-between;*/
     align-items: center;
+}
+.item .dados div {
+    float: left;
+    width: 33.333%;
+    text-align: center;
+}
+.item .dados div:first-child {
+    text-align: left;
+}
+.item .dados div:last-child {
+    text-align: right;
 }
 .item .dados div span {
     color: #304FFE;
@@ -153,7 +168,7 @@ main .add-oculto {
 
 .snackbar {
     position: fixed;
-    bottom: -50px;
+    bottom: -55px;
     left: 0;
     width: 100%;
     padding: 4% 0;
