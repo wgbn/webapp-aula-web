@@ -93,7 +93,7 @@
         _private.addClick = function(e){
             document.querySelector('.app').style.display = 'none';
             document.querySelector('.formulario').style.display = 'block';
-            document.querySelector('.add').innerHTML = 'ok';
+            document.querySelector('.add').innerHTML = '&#10004;';
         };
         
         _private.toast = function(_texto){
