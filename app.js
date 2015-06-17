@@ -1,217 +1,247 @@
-window.onload = function () {
-    (function (d) {
-        var
-            ce = function (e, n) {
-                var a = document.createEvent("CustomEvent");
-                a.initCustomEvent(n, true, true, e.target);
-                e.target.dispatchEvent(a);
-                a = null;
-                return false
-            },
-            nm = true,
-            sp = {
-                x: 0,
-                y: 0
-            },
-            ep = {
-                x: 0,
-                y: 0
-            },
-            touch = {
-                touchstart: function (e) {
-                    sp = {
-                        x: e.touches[0].pageX,
-                        y: e.touches[0].pageY
-                    }
-                },
-                touchmove: function (e) {
-                    nm = false;
-                    ep = {
-                        x: e.touches[0].pageX,
-                        y: e.touches[0].pageY
-                    }
-                },
-                touchend: function (e) {
-                    if (nm) {
-                        ce(e, 'fc')
-                    } else {
-                        var x = ep.x - sp.x,
-                            xr = Math.abs(x),
-                            y = ep.y - sp.y,
-                            yr = Math.abs(y);
-                        if (Math.max(xr, yr) > 20) {
-                            ce(e, (xr > yr ? (x < 0 ? 'swl' : 'swr') : (y < 0 ? 'swu' : 'swd')))
-                        }
-                    };
-                    nm = true
-                },
-                touchcancel: function (e) {
-                    nm = false
-                }
-            };
-        for (var a in touch) {
-            d.addEventListener(a, touch[a], false);
-        }
-    })(document);
-    //EXAMPLE OF USE
-    var h = function (e) {
-        //console.log(e.type, e);
-        //if (e.target.className == 'item')
-            App.toast(e.target.className);
-    };
-    //document.body.addEventListener('fc', h, false); // 0-50ms vs 500ms with normal click
-    //document.body.addEventListener('swl', h, false);
-    //document.body.addEventListener('swr', h, false);
-    //document.body.addEventListener('swu', h, false);
-    //document.body.addEventListener('swd', h, false);
-}
-
-Number.prototype.formatMoney = function(c, d, t){
-var n = this,
-    c = isNaN(c = Math.abs(c)) ? 2 : c,
-    d = d == undefined ? "." : d,
-    t = t == undefined ? "," : t,
-    s = n < 0 ? "-" : "",
-    i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "",
-    j = (j = i.length) > 3 ? j % 3 : 0;
-   return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
- };
-
-;(function(window, document){
+;(function (window, document) {
 
     'use strict';
 
-    var App = (function(){
+    var App = (function () {
 
         var _private = {};
         var _public = {};
 
-        var itens = [
-            {
-                item: 'Biscoito de chocolate',
-                valor: 1.5,
-                qtde: 2
-            }
-        ];
+        var itens = Array();
 
-        _public.init = function(){
+        _public.init = function () {
             console.info('init');
 
             var medidas = {
-                pxBody:     document.querySelector('body').offsetHeight,
-                pxHeader:   document.querySelector('header').offsetHeight,
-                pxBarra:    document.querySelector('.barra').offsetHeight
+                pxBody: document.querySelector('body').offsetHeight,
+                pxHeader: document.querySelector('header').offsetHeight,
+                pxBarra: document.querySelector('.barra').offsetHeight
             };
             var altura = medidas.pxBody - (medidas.pxBarra + medidas.pxHeader);
 
-            document.querySelector('.app').style.height = altura+'px';
-            document.querySelector('.formulario').style.height = altura+'px';
+            document.querySelector('.app').style.height = altura + 'px';
+            document.querySelector('.formulario').style.height = altura + 'px';
 
-            document.querySelector('.add').addEventListener('click', _private.addClick, false);
-            document.querySelector('.formulario form').addEventListener('submit', _private.addItemLista, false);
-            document.querySelector('.formulario .cancelar').addEventListener('click', _private.cancelarClick, false);
-            document.querySelector('.item').addEventListener('swr', _private.marcar, false);
+            if (localStorage.getItem('listaDeCompras') != null){
+                _private.getListaLocal();
+            }
 
+            _private.bloquearBackButton();
+            _private.setDomEventos();
             _private.printListaItens();
         };
 
-        _private.marcar = function(e){
-            _public.toast(e.target);
+        _private.bloquearBackButton = function(){
+            window.location.hash="no-back-button";
+            window.location.hash="Again-No-back-button";
+            window.onhashchange=function(){window.location.hash="no-back-button";}
         };
 
-        _private.printListaItens = function(){
+        _private.setDomEventos = function(){
+            document.querySelector('.add').addEventListener('click', _private.addClick, false);
+            document.querySelector('.formulario form').addEventListener('submit', _private.addItemLista, false);
+            document.querySelector('.formulario .cancelar').addEventListener('click', _private.cancelarClick, false);
+            document.querySelector('.formulario .ok').addEventListener('click', function(e){ document.querySelector('.formulario input[type=submit]').click(); }, false);
+            document.querySelector('.formulario #nome-item').addEventListener('keyup', function(e){
+                if (e.keyCode == 13){
+                    document.querySelector('.formulario #valor-item').focus();
+                    return false;
+                }
+            });
+        };
+
+        _private.marcar = function (e) {
+            if (!itens[this.dataset.id].marcado){
+                _private.somarAoTotal(itens[this.dataset.id].valor * itens[this.dataset.id].qtde);
+                itens[this.dataset.id].marcado = 1;
+                this.classList.add('item-marcado');
+            } else {
+                _private.subtrairDoTotal(itens[this.dataset.id].valor * itens[this.dataset.id].qtde);
+                itens[this.dataset.id].marcado = 0;
+                this.classList.remove('item-marcado');
+            }
+            _private.setListaLocal();
+        };
+
+        _private.apagar = function(e){
+            var _snack = document.querySelector('.snackbar');
+            _snack.querySelector('span').innerHTML = 'Deseja excluir o item?';
+            _snack.dataset.itemId = this.dataset.id;
+            _snack.classList.add('snaclbar-ativa');
+
+            _snack.querySelector('.sim').addEventListener('click', function(e){
+                _snack.classList.remove('snaclbar-ativa');
+                _private.excluirItem();
+            });
+            _snack.querySelector('.nao').addEventListener('click', function(e){
+                _snack.classList.remove('snaclbar-ativa');
+            });
+        };
+
+        _private.excluirItem = function(){
+            var _item = document.querySelector('.snackbar');
+            if (itens[_item.dataset.itemId].marcado){
+                _private.subtrairDoTotal(itens[_item.dataset.id].valor * itens[_item.dataset.id].qtde);
+            }
+            itens.splice(_item.dataset.id,1);
+            _private.setListaLocal();
+            _private.printListaItens();
+        };
+
+        _private.somarAoTotal = function(_valor){
+            var _total = parseFloat(document.querySelector('#total').innerHTML.replace('.','').replace(',','.'));
+            _total += _valor;
+            document.querySelector('#total').innerHTML = Number(_total).formatMoney(2,',','.');
+        };
+
+        _private.subtrairDoTotal = function(_valor){
+            var _total = parseFloat(document.querySelector('#total').innerHTML.replace('.','').replace(',','.'));
+            _total -= _valor;
+            document.querySelector('#total').innerHTML = Number(_total).formatMoney(2,',','.');
+        };
+
+        _private.printListaItens = function () {
             var _html = '';
             var _total = 0;
 
-            itens.forEach(function(_val){
-                _html += '<li class="item">';
-                    _html += '<strong class="nome">'+_val.item+'</strong>';
+            if (itens && itens.length > 0){
+                itens.forEach(function (_val, _key) {
+                    _html += '<li class="item'+(_val.marcado ? ' item-marcado':'')+'" data-id="' + _key + '">';
+                    _html += '<strong class="nome">' + _val.item + '</strong>';
                     _html += '<div class="dados">';
-                        _html += '<div>';
-                            _html += '<em>Val. Unit.</em>';
-                            _html += '<span class="unitario">'+Number(_val.valor).formatMoney(2,',','.')+'</span>';
-                        _html += '</div>';
-
-                        _html += '<div>';
-                            _html += '<em>Qtde</em>';
-                            _html += '<span class="qtde">'+_val.qtde+'</span>';
-                        _html += '</div>';
-
-                        _html += '<div>';
-                            _html += '<em>Subtotal</em>';
-                            _html += '<span class="subtotal">'+Number(_val.qtde * _val.valor).formatMoney(2,',','.')+'</span>';
-                        _html += '</div>';
+                    _html += '<div>';
+                    _html += '<em>Val. Unit.</em>';
+                    _html += '<span class="unitario">' + Number(_val.valor).formatMoney(2, ',', '.') + '</span>';
                     _html += '</div>';
-                _html += '</li>';
 
-                _total += (_val.qtde * _val.valor);
-            });
+                    _html += '<div>';
+                    _html += '<em>Qtde</em>';
+                    _html += '<span class="qtde">' + _val.qtde + '</span>';
+                    _html += '</div>';
 
-            document.querySelector('.lista').innerHTML = _html;
-            document.querySelector('#total').innerHTML = Number(_total).formatMoney(2,',','.');
+                    _html += '<div>';
+                    _html += '<em>Subtotal</em>';
+                    _html += '<span class="subtotal">' + Number(_val.qtde * _val.valor).formatMoney(2, ',', '.') + '</span>';
+                    _html += '</div>';
+                    _html += '</div>';
+                    _html += '</li>';
+
+                    if (_val.marcado)
+                        _total += (_val.qtde * _val.valor);
+                });
+
+                document.querySelector('.lista').innerHTML = _html;
+
+                var _itens = document.querySelectorAll('.item');
+                var _pressTimer;
+
+                itens.forEach(function (_v, _k) {
+                    _itens[_k].addEventListener('swr', _private.marcar, false);
+                    _itens[_k].addEventListener('swl', _private.apagar, false);
+                    _itens[_k].addEventListener('dblclick', _private.marcar, false);
+                    _itens[_k].addEventListener('click', function(e){ e.preventDefault(); }, false);
+                    _itens[_k].addEventListener('mousedown', function(e){
+                        e.preventDefault();
+                        _pressTimer = window.setTimeout(_private.editarItem(this), 1000);
+                    }, false);
+                    _itens[_k].addEventListener('mouseup', function(e){
+                        clearTimeout(_pressTimer);
+                    }, false);
+                });
+            } else {
+                document.querySelector('.lista').innerHTML = '';
+            }
+
+            document.querySelector('#total').innerHTML = Number(_total).formatMoney(2, ',', '.');
+
         };
         
-        _private.addItemLista = function(e) {
-            e.preventDefault();
+        _private.editarItem = function(e){
+            document.querySelector('.app').style.display = 'none';
+            document.querySelector('.formulario').style.display = 'block';
+            document.querySelector('.add').classList.add('add-oculto');
             
+            document.querySelector('#nome-item').value = itens[e.dataset.id].item;
+            document.querySelector('#valor-item').value = itens[e.dataset.id].valor;
+            document.querySelector('#qtde-item').value = itens[e.dataset.id].qtde;
+            document.querySelector('.formulario h4').innerHTML = 'editar item da lista';
+            document.querySelector('.formulario .ok').dataset.edita = 1;
+            document.querySelector('.formulario .ok').dataset.itemId = e.dataset.id;
+        };
+
+        _private.addItemLista = function (e) {
+            e.preventDefault();
+
             var item = {
                 item: document.querySelector("#nome-item").value,
                 valor: document.querySelector("#valor-item").value,
-                qtde: document.querySelector("#qtd-item").value
+                qtde: document.querySelector("#qtde-item").value,
+                marcado: 0
             };
             
-            if (item.item && item.valor && item.qtde){
-                
-                itens.push(item);
-                
+            var edita = parseInt(document.querySelector('.formulario .ok').dataset.edita);
+            var itemId = parseInt(document.querySelector('.formulario .ok').dataset.itemId);
+
+            if (item.item && item.valor && item.qtde) {
+
+                if (edita){
+                    item.marcado = itens[parseInt(document.querySelector('.formulario .ok').dataset.itemId)].marcado;
+                    itens[parseInt(document.querySelector('.formulario .ok').dataset.itemId)] = item;
+                } else {
+                    itens.push(item);
+                }
+
                 _private.cancelarClick(e);
+                _private.setListaLocal();
                 _private.printListaItens();
-                
+
             } else {
-                
+
                 _private.toast("Preencha todos os campos");
-                
+
             }
         };
-        
-        _private.cancelarClick = function(e){
+
+        _private.cancelarClick = function (e) {
             document.querySelector('.formulario').style.display = 'none';
-            document.querySelector('.formulario').style.opacity = 0;
             document.querySelector('.app').style.display = 'block';
-            document.querySelector('.app').style.opacity = 1;
-            document.querySelector('.add').innerHTML = '+';
+            document.querySelector('.add').classList.remove('add-oculto');
 
             _private.limpaFormulario();
         }
 
-        _private.limpaFormulario = function() {
+        _private.limpaFormulario = function () {
             var inputs = document.querySelectorAll('.formulario form input');
             for (var i = 0; i < inputs.length - 1; i++)
                 inputs[i].value = '';
         };
-        
-        _private.addClick = function(e){
-            if (e.target.innerHTML == '+'){
-                document.querySelector('.app').style.display = 'none';
-                document.querySelector('.app').style.opacity = 0;
-                document.querySelector('.formulario').style.display = 'block';
-                document.querySelector('.formulario').style.opacity = 1;
-                document.querySelector('.add').innerHTML = '&#10004;';
-            } else {
-                document.querySelector('.formulario form input[type=submit]').click();
-            }
+
+        _private.addClick = function (e) {
+            document.querySelector('.app').style.display = 'none';
+            document.querySelector('.formulario').style.display = 'block';
+            document.querySelector('.add').classList.add('add-oculto');
+            document.querySelector('.formulario h4').innerHTML = 'adicionar item à lista';
+            document.querySelector('.formulario .ok').dataset.edita = 0;
         };
-        
-        _public.toast = function(_texto){
+
+        _private.toast = function (_texto) {
             var _htmlToast = document.querySelector('.toast');
             _htmlToast.querySelector('span').innerHTML = _texto;
             _htmlToast.style.opacity = 1;
-            
-            window.setTimeout(function(e){
+
+            window.setTimeout(function (e) {
                 _htmlToast.style.opacity = 0;
             }, 3000);
         };
         
+        _private.setListaLocal = function(){
+            localStorage.setItem('listaDeCompras', JSON.stringify(itens));
+        };
+
+        _private.getListaLocal = function(){
+            itens = JSON.parse(localStorage.getItem('listaDeCompras'));
+        };
+
         return _public;
 
     })();
@@ -221,6 +251,6 @@ var n = this,
 
 })(window, document);
 
-document.addEventListener("DOMContentLoaded", function(e){
+document.addEventListener("DOMContentLoaded", function (e) {
     window.App.init();
 });

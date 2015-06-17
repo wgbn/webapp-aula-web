@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Lista Fácil</title>
     <link rel="stylesheet" href="style.css">
+    <script src="prototypes.js"></script>
     <script src="app.js"></script>
 </head>
 
@@ -54,15 +55,24 @@
             <form>
                 <input type="text" id="nome-item" placeholder="Nome do item...">
                 <input type="tel" id="valor-item" name="valor-item" class="meio-input" placeholder="Valor unitário..." pattern="[0-9.]+" title="Deve conter somente números">
-                <input type="tel" id="qtd-item" name="qtd-item" class="meio-input" placeholder="Quantidade..." pattern="[0-9.]+" title="Deve conter somente números">
+                <input type="tel" id="qtde-item" name="qtde-item" class="meio-input" placeholder="Quantidade..." pattern="[0-9.]+" title="Deve conter somente números">
                 <input type="submit" value="ok">
             </form>
-            <button class="cancelar">cancelar</button>
+            <div class="botoes">
+                <button class="cancelar">cancelar</button>
+                <button class="ok" data-edita="0" data-item-id="">ok</button>
+            </div>
         </section>
     </main>
     
     <div class="toast">
         <span></span>
+    </div>
+
+    <div class="snackbar">
+        <span>msg</span>
+        <button class="nao">não</button>
+        <button class="sim">sim</button>
     </div>
      
 </body>
