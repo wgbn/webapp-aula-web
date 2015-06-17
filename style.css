@@ -31,7 +31,7 @@ main {
     position: relative;
     background-color: #C5CAE9;
     width: 100%;
-    max-width: 360px;
+    max-width: 640px;
     margin: 0 auto;
     -webkit-box-shadow: 0 0 8px 0 rgba(0,0,0,.3);
     box-shadow: 0 0 8px 0 rgba(0,0,0,.3);
@@ -181,7 +181,7 @@ main .add-oculto {
 
 .snackbar {
     position: absolute;
-    bottom: -55px;
+    bottom: -85px;
     left: 0;
     width: 100%;
     padding: 4% 0;
