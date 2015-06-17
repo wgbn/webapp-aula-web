@@ -8,6 +8,7 @@
         var _public = {};
 
         var itens = Array();
+        var itemId= null;
 
         _public.init = function () {
             console.info('init');
@@ -64,9 +65,9 @@
         };
 
         _private.apagar = function(e){
+            itemId = this.dataset.id;
             var _snack = document.querySelector('.snackbar');
             _snack.querySelector('span').innerHTML = 'Deseja excluir o item?';
-            _snack.dataset.itemId = this.dataset.id;
             _snack.classList.add('snaclbar-ativa');
 
             _snack.querySelector('.sim').addEventListener('click', function(e){
@@ -76,16 +77,21 @@
             _snack.querySelector('.nao').addEventListener('click', function(e){
                 _snack.classList.remove('snaclbar-ativa');
             });
+
         };
 
         _private.excluirItem = function(){
             var _item = document.querySelector('.snackbar');
-            if (itens[_item.dataset.itemId].marcado){
-                _private.subtrairDoTotal(itens[_item.dataset.id].valor * itens[_item.dataset.id].qtde);
+            if (itemId){
+                if (itens[itemId].marcado)
+                    _private.subtrairDoTotal(itens[itemId].valor * itens[itemId].qtde);
+
+                itens.splice(parseInt(itemId), 1);
+
+                itemId = null;
+                _private.setListaLocal();
+                _private.printListaItens();
             }
-            itens.splice(_item.dataset.id,1);
-            _private.setListaLocal();
-            _private.printListaItens();
         };
 
         _private.somarAoTotal = function(_valor){
@@ -105,25 +111,26 @@
             var _total = 0;
 
             if (itens && itens.length > 0){
+
                 itens.forEach(function (_val, _key) {
                     _html += '<li class="item'+(_val.marcado ? ' item-marcado':'')+'" data-id="' + _key + '">';
-                    _html += '<strong class="nome">' + _val.item + '</strong>';
-                    _html += '<div class="dados">';
-                    _html += '<div>';
-                    _html += '<em>Val. Unit.</em>';
-                    _html += '<span class="unitario">' + Number(_val.valor).formatMoney(2, ',', '.') + '</span>';
-                    _html += '</div>';
+                        _html += '<strong class="nome">' + _val.item + '</strong>';
+                        _html += '<div class="dados">';
+                            _html += '<div>';
+                                _html += '<em>Val. Unit.</em>';
+                                _html += '<span class="unitario">' + Number(_val.valor).formatMoney(2, ',', '.') + '</span>';
+                            _html += '</div>';
 
-                    _html += '<div>';
-                    _html += '<em>Qtde</em>';
-                    _html += '<span class="qtde">' + _val.qtde + '</span>';
-                    _html += '</div>';
+                            _html += '<div>';
+                                _html += '<em>Qtde</em>';
+                                _html += '<span class="qtde">' + _val.qtde + '</span>';
+                            _html += '</div>';
 
-                    _html += '<div>';
-                    _html += '<em>Subtotal</em>';
-                    _html += '<span class="subtotal">' + Number(_val.qtde * _val.valor).formatMoney(2, ',', '.') + '</span>';
-                    _html += '</div>';
-                    _html += '</div>';
+                            _html += '<div>';
+                                _html += '<em>Subtotal</em>';
+                                _html += '<span class="subtotal">' + Number(_val.qtde * _val.valor).formatMoney(2, ',', '.') + '</span>';
+                            _html += '</div>';
+                        _html += '</div>';
                     _html += '</li>';
 
                     if (_val.marcado)
@@ -174,8 +181,8 @@
 
             var item = {
                 item: document.querySelector("#nome-item").value,
-                valor: document.querySelector("#valor-item").value,
-                qtde: document.querySelector("#qtde-item").value,
+                valor: document.querySelector("#valor-item").value.replace(',','.'),
+                qtde: document.querySelector("#qtde-item").value.replace(',','.'),
                 marcado: 0
             };
             

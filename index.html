@@ -25,37 +25,15 @@
         </section>
 
         <section class="app area">
-            <ul class="lista">
-
-                <!--li class="item">
-                    <strong class="nome">nome do item aqui</strong>
-                    <div class="dados">
-                        <div>
-                            <em>Val. Unit.</em>
-                            <span class="unitario">00,00</span>
-                        </div>
-
-                        <div>
-                            <em>Qtde</em>
-                            <span class="qtde">00</span>
-                        </div>
-
-                        <div>
-                            <em>Subtotal</em>
-                            <span class="subtotal">00,00</span>
-                        </div>
-                    </div>
-                </li-->
-
-            </ul>
+            <ul class="lista"></ul>
         </section>
         
         <section class="formulario area">
             <h4>Adicionar item à lista</h4>
             <form>
                 <input type="text" id="nome-item" placeholder="Nome do item...">
-                <input type="tel" id="valor-item" name="valor-item" class="meio-input" placeholder="Valor unitário..." pattern="[0-9.]+" title="Deve conter somente números">
-                <input type="tel" id="qtde-item" name="qtde-item" class="meio-input" placeholder="Quantidade..." pattern="[0-9.]+" title="Deve conter somente números">
+                <input type="tel" id="valor-item" name="valor-item" class="meio-input" placeholder="Valor unitário..." pattern="[0-9.,]+" title="Deve conter somente números">
+                <input type="tel" id="qtde-item" name="qtde-item" class="meio-input" placeholder="Quantidade..." pattern="[0-9.,]+" title="Deve conter somente números">
                 <input type="submit" value="ok">
             </form>
             <div class="botoes">
