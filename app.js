@@ -55,7 +55,8 @@ window.onload = function () {
     })(document);
     //EXAMPLE OF USE
     var h = function (e) {
-        console.log(e.type, e)
+        //console.log(e.type, e);
+        alert(e.type);
     };
     document.body.addEventListener('fc', h, false); // 0-50ms vs 500ms with normal click
     document.body.addEventListener('swl', h, false);
