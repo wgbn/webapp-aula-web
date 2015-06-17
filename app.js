@@ -58,11 +58,11 @@ window.onload = function () {
         //console.log(e.type, e);
         App.toast(e.type);
     };
-    document.body.addEventListener('fc', h, false); // 0-50ms vs 500ms with normal click
-    document.body.addEventListener('swl', h, false);
-    document.body.addEventListener('swr', h, false);
-    document.body.addEventListener('swu', h, false);
-    document.body.addEventListener('swd', h, false);
+    //document.body.addEventListener('fc', h, false); // 0-50ms vs 500ms with normal click
+    document.querySelector('.app .lista .item').addEventListener('swl', h, false);
+    document.querySelector('.app .lista .item').addEventListener('swr', h, false);
+    //document.body.addEventListener('swu', h, false);
+    //document.body.addEventListener('swd', h, false);
 }
 
 Number.prototype.formatMoney = function(c, d, t){
