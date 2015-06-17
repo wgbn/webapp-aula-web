@@ -97,3 +97,45 @@ main .add {
     color: #333;
     font-size: .7em;
 }
+
+.toast {
+    position: fixed;
+    bottom: 30px;
+    left: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+    z-index: 1000;
+    text-align: center;
+    
+    -webkit-transition: opacity 1s;
+    transition: opacity 1s;
+}
+.toast span {
+    background-color: rgba(0,0,0,.4);
+    color: #fff;
+    padding: .4em;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;  
+}
+
+.formulario {
+    display: none;
+}
+.formulario form {
+    text-align: center;
+}
+.formulario input {
+    margin: .5em 0;
+    width: 92%;
+    padding: 2%;
+    outline: none;
+}
+.meio-input {
+    width: 43% !important;
+}
+
+.formulario .btnSalvarItem {
+    width: 30%;
+}
