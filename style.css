@@ -294,3 +294,8 @@ main .add-oculto {
 :-ms-input-placeholder {
    color: #3f51b5;
 }
+@media screen and (max-width: 630px){
+    .snackbar {
+        bottom: -80px;
+    }
+}
