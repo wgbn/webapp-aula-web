@@ -44,12 +44,15 @@ header {
     text-align: center;
     z-index: 2;
 }
-    header #total {
-        font-size: 4em;
-        font-weight: bold;
-        margin-top: .2em;
-        display: inline-block;
-    }
+header #total {
+    font-size: 4em;
+    font-weight: bold;
+    margin-top: .2em;
+    display: inline-block;
+}
+header #total em {
+    font-size: .5em;
+}
 
 section.app {
     position: relative;
