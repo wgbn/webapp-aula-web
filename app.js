@@ -115,10 +115,10 @@
                 itens.forEach(function (_val, _key) {
                     _html += '<li class="item'+(_val.marcado ? ' item-marcado':'')+'" data-id="' + _key + '">';
                         _html += '<strong class="nome">' + _val.item + '</strong>';
-                        _html += '<div class="dados">';
+                        _html += '<div class="dados clearfix">';
                             _html += '<div>';
                                 _html += '<em>Val. Unit.</em>';
-                                _html += '<span class="unitario">' + Number(_val.valor).formatMoney(2, ',', '.') + '</span>';
+                                _html += '<span class="unitario">R$ ' + Number(_val.valor).formatMoney(2, ',', '.') + '</span>';
                             _html += '</div>';
 
                             _html += '<div>';
@@ -128,7 +128,7 @@
 
                             _html += '<div>';
                                 _html += '<em>Subtotal</em>';
-                                _html += '<span class="subtotal">' + Number(_val.qtde * _val.valor).formatMoney(2, ',', '.') + '</span>';
+                                _html += '<span class="subtotal">R$ ' + Number(_val.qtde * _val.valor).formatMoney(2, ',', '.') + '</span>';
                             _html += '</div>';
                         _html += '</div>';
                     _html += '</li>';
