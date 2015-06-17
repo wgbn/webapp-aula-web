@@ -56,7 +56,7 @@ window.onload = function () {
     //EXAMPLE OF USE
     var h = function (e) {
         //console.log(e.type, e);
-        alert(e.type);
+        App.toast(e.type);
     };
     document.body.addEventListener('fc', h, false); // 0-50ms vs 500ms with normal click
     document.body.addEventListener('swl', h, false);
@@ -196,7 +196,7 @@ var n = this,
             }
         };
         
-        _private.toast = function(_texto){
+        _public.toast = function(_texto){
             var _htmlToast = document.querySelector('.toast');
             _htmlToast.querySelector('span').innerHTML = _texto;
             _htmlToast.style.opacity = 1;
