@@ -159,7 +159,7 @@
                 document.querySelector('.lista').innerHTML = '';
             }
 
-            document.querySelector('#total').innerHTML = Number(_total).formatMoney(2, ',', '.');
+            document.querySelector('#total').innerHTML = '<em>R$</em> '+Number(_total).formatMoney(2, ',', '.');
 
         };
         
