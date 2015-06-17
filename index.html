@@ -53,10 +53,11 @@
             <h4>Adicionar item à lista</h4>
             <form>
                 <input type="text" id="nome-item" placeholder="Nome do item...">
-                <input type="tel" id="valor-item" name="valor-item" class="meio-input" placeholder="Valor unitário...">
-                <input type="tel" id="qtd-item" name="qtd-item" class="meio-input" placeholder="Quantidade...">
-                <input type="submit" value="vai" class="btnSalvarItem">
+                <input type="tel" id="valor-item" name="valor-item" class="meio-input" placeholder="Valor unitário..." pattern="[0-9.]+" title="Deve conter somente números">
+                <input type="tel" id="qtd-item" name="qtd-item" class="meio-input" placeholder="Quantidade..." pattern="[0-9.]+" title="Deve conter somente números">
+                <input type="submit" value="ok">
             </form>
+            <button class="cancelar">cancelar</button>
         </section>
     </main>
     

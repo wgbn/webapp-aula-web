@@ -14,6 +14,13 @@ ul {
 body {
     background-color: #C5CAE9;
     font-family: serif;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    min-height: 100%;
+    min-width: 100%;
+    height: auto;
+    width: auto;
 }
 
 header {
@@ -26,13 +33,16 @@ header {
     z-index: 2;
 }
     header #total {
-        font-size: 5em;
+        font-size: 4em;
         font-weight: bold;
     }
 
 section.app {
     position: relative;
     overflow: auto;
+    opacity: 1;
+    -webkit-transition: opacity .5s;
+    transition: opacity .5s;
 }
 main .add {
     position: absolute;
@@ -101,7 +111,7 @@ main .add {
 
 .toast {
     position: fixed;
-    bottom: 30px;
+    bottom: 70px;
     left: 0;
     width: 100%;
     margin: 0;
@@ -110,8 +120,8 @@ main .add {
     z-index: 1000;
     text-align: center;
     
-    -webkit-transition: opacity 1s;
-    transition: opacity 1s;
+    -webkit-transition: opacity .5s;
+    transition: opacity .5s;
 }
 .toast span {
     background-color: rgba(0,0,0,.4);
@@ -123,6 +133,10 @@ main .add {
 
 .formulario {
     display: none;
+    position: relative;
+    opacity: 0;
+    -webkit-transition: opacity .5s;
+    transition: opacity .5s;
 }
 .formulario h4 {
     text-transform: uppercase;
@@ -144,28 +158,44 @@ main .add {
     outline: none;
     -webkit-border-radius: 3px;
     border-radius: 3px;
-    border: 1px solid #3949AB;
-    background-color: #9FA8DA;
+    border: 1px solid rgba(57, 73, 171, 0.66);
+    background-color: rgba(159, 168, 218, 0.67);
     font-size: 1em;
     text-align: center;
+}
+.formulario form input[type=submit] {
+    display: none;
 }
 .meio-input {
     width: 43% !important;
     margin: 0 2%;
 }
-.formulario .btnSalvarItem {
-    width: 30%;
+.formulario .cancelar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 4% 0;
+    width: 100%;
+    display: block;
+    outline: none;
+    border: 0;
+    text-align: center;
+    text-transform: uppercase;
+    color: #fff;
+    background-color: #dd2c00;
+    font-size: .8em;
+    cursor: pointer;
 }
 ::-webkit-input-placeholder {
-   color: #fff;
+   color: #3f51b5;
 }
 :-moz-placeholder {
-   color: #fff;
+   color: #3f51b5;
 }
 
 ::-moz-placeholder {
-   color: #fff;
+   color: #3f51b5;
 }
 :-ms-input-placeholder {
-   color: #fff;
+   color: #3f51b5;
 }
