@@ -1,0 +1,267 @@
+/*
+https://www.google.com/design/spec/style/color.html#color-color-palette
+*/
+
+*, html, body, ul, li, h1, h2, h3, h4, h5 {
+    margin: 0;
+    padding: 0;
+}
+
+ul {
+    list-style: none;
+}
+
+body {
+    background-color: #C5CAE9;
+    font-family: serif;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    min-height: 100%;
+    min-width: 100%;
+    height: auto;
+    width: auto;
+}
+
+header {
+    background-color: #3F51B5;
+    height: 100px;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+    header #total {
+        font-size: 4em;
+        font-weight: bold;
+    }
+
+section.app {
+    position: relative;
+    overflow: auto;
+}
+main .add {
+    position: absolute;
+    top: 120px;
+    right: 10px;
+    border: 0;
+    background-color: #fff;
+    width: 60px;
+    height: 60px;
+    -webkit-border-radius: 30px;
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #1A237E;
+    font-size: 2em;
+    font-weight: bold;
+    line-height: 1em;
+    -webkit-box-shadow: 2px 2px 4px 0 rgba(0,0,0,.3);
+    box-shadow: 2px 2px 4px 0 rgba(0,0,0,.3);
+    z-index: 100;
+    cursor: pointer;
+    outline: none;
+    opacity: 1;
+    -webkit-transition: opacity .4s, right .4s;
+    transition: opacity .4s, right .4s;
+}
+button:active {
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color: transparent;
+}
+main .add-oculto {
+    opacity: 0;
+    right: -75px;
+}
+
+.barra {
+    height: 50px;
+    background-color: #303F9F;
+}
+    .barra h1 {
+        color: #fff;
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 1.3em;
+        font-weight: normal;
+        line-height: 2.3em;
+    }
+
+.item {
+    padding: .2em .5em;
+    border-bottom: 1px solid #9FA8DA;
+    font-size: 1.1em;
+
+    -webkit-touch-callout:none;
+    -webkit-user-select:none;
+    -khtml-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+}
+.item strong.nome {
+    font-weight: normal;
+    color: #283593;
+    text-transform: uppercase;
+    font-size: 1em;
+}
+.item-marcado strong.nome {
+    text-decoration: line-through;
+    color: #bf360c;
+}
+.item-marcado .dados div span {
+    color: #bf360c !important;
+}
+.item .dados {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.item .dados div span {
+    color: #304FFE;
+    display: block;
+}
+.item .dados div em {
+    text-transform: uppercase;
+    color: #333;
+    font-size: .7em;
+}
+
+.toast {
+    position: fixed;
+    bottom: 80px;
+    left: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+    z-index: 1000;
+    text-align: center;
+
+    -webkit-transition: opacity .5s;
+    transition: opacity .5s;
+}
+.toast span {
+    background-color: rgba(0,0,0,.4);
+    color: #fff;
+    padding: .4em .6em;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+}
+
+.snackbar {
+    position: fixed;
+    bottom: -50px;
+    left: 0;
+    width: 100%;
+    padding: 4% 0;
+    background-color: #212121;
+    z-index: 1000;
+    -webkit-transition: bottom .3s;
+    transition: bottom .3s;
+}
+.snaclbar-ativa {
+    bottom: 0;
+}
+.snackbar span {
+    padding-left: .5em;
+    color: #e0e0e0;
+    font-size: .8em;
+    text-transform: uppercase;
+}
+.snackbar button {
+    float: right;
+    right: 3px;
+    border: 0;
+    outline: 0;
+    padding: 1.5% 3%;
+    margin: 0;
+    background-color: transparent;
+    text-transform: uppercase;
+}
+.snackbar .nao {
+    color: #b71c1c;
+}
+.snackbar .sim {
+    color: #4caf50;
+}
+
+.formulario {
+    display: none;
+    position: relative;
+}
+.formulario h4 {
+    text-transform: uppercase;
+    text-align: center;
+    color: #283593;
+    font-size: 1.3em;
+    font-weight: normal;
+    padding: 1em 0;
+}
+.formulario form {
+    text-align: center;
+    max-width: 90%;
+    margin: 0 auto;
+}
+.formulario form input {
+    margin: .5em 0;
+    width: 92%;
+    padding: 3% 2%;
+    outline: none;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    border: 1px solid rgba(57, 73, 171, 0.66);
+    background-color: rgba(255,255,255,.3);
+    font-size: 1.2em;
+    text-align: center;
+
+    -webkit-box-shadow:inset 1px 1px 2px 0 rgba(0,0,0,.2);
+    box-shadow:inset 1px 1px 2px 0 rgba(0,0,0,.2);
+}
+.formulario form input[type=submit] {
+    display: none;
+}
+.meio-input {
+    width: 43% !important;
+    margin: 0 2%;
+}
+.formulario .botoes {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+.formulario .botoes button {
+    padding: 6% 0;
+    width: 50%;
+    display: inline-block;
+    float: left;
+    outline: none;
+    border: 0;
+    text-align: center;
+    text-transform: uppercase;
+    color: #fff;
+    font-size: .8em;
+    cursor: pointer;
+}
+.formulario .botoes .cancelar {
+    background-color: #dd2c00;
+}
+.formulario .botoes .ok {
+    background-color: #4caf50;
+}
+::-webkit-input-placeholder {
+   color: #3f51b5;
+}
+:-moz-placeholder {
+   color: #3f51b5;
+}
+
+::-moz-placeholder {
+   color: #3f51b5;
+}
+:-ms-input-placeholder {
+   color: #3f51b5;
+}
