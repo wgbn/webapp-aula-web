@@ -56,12 +56,12 @@ window.onload = function () {
     //EXAMPLE OF USE
     var h = function (e) {
         //console.log(e.type, e);
-        if (e.target.className == 'item')
-            App.toast(e.type);
+        //if (e.target.className == 'item')
+            App.toast(e.target.className);
     };
     //document.body.addEventListener('fc', h, false); // 0-50ms vs 500ms with normal click
-    document.body.addEventListener('swl', h, false);
-    document.body.addEventListener('swr', h, false);
+    //document.body.addEventListener('swl', h, false);
+    //document.body.addEventListener('swr', h, false);
     //document.body.addEventListener('swu', h, false);
     //document.body.addEventListener('swd', h, false);
 }
@@ -110,8 +110,13 @@ var n = this,
             document.querySelector('.add').addEventListener('click', _private.addClick, false);
             document.querySelector('.formulario form').addEventListener('submit', _private.addItemLista, false);
             document.querySelector('.formulario .cancelar').addEventListener('click', _private.cancelarClick, false);
+            document.querySelector('.item').addEventListener('swr', _private.marcar, false);
 
             _private.printListaItens();
+        };
+
+        _private.marcar = function(e){
+            _public.toast(e.target);
         };
 
         _private.printListaItens = function(){
