@@ -56,11 +56,12 @@ window.onload = function () {
     //EXAMPLE OF USE
     var h = function (e) {
         //console.log(e.type, e);
-        App.toast(e.type);
+        if (e.target.className == 'item')
+            App.toast(e.type);
     };
     //document.body.addEventListener('fc', h, false); // 0-50ms vs 500ms with normal click
-    document.querySelector('.app .lista .item').addEventListener('swl', h, false);
-    document.querySelector('.app .lista .item').addEventListener('swr', h, false);
+    document.body.addEventListener('swl', h, false);
+    document.body.addEventListener('swr', h, false);
     //document.body.addEventListener('swu', h, false);
     //document.body.addEventListener('swd', h, false);
 }
